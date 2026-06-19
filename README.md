@@ -1,5 +1,7 @@
 # VS Code Remote SSH Proxy Skill
 
+[English](README.md) | [中文](README.zh-CN.md)
+
 A Codex skill for setting up VS Code Remote SSH on Windows when a remote Linux/HPC server needs to use your local Clash/Mihomo proxy through SSH reverse port forwarding.
 
 The skill helps Codex configure:
@@ -125,13 +127,14 @@ If passwordless SSH already works, omit `CODEX_REMOTE_SSH_PASSWORD`.
 
 ```text
 .
-├── README.md
-├── LICENSE
-├── install.ps1
-└── vscode-remote-ssh-proxy/
-    ├── SKILL.md
-    ├── agents/openai.yaml
-    └── scripts/setup-vscode-remote-ssh-proxy.ps1
+|-- README.md
+|-- README.zh-CN.md
+|-- LICENSE
+|-- install.ps1
+`-- vscode-remote-ssh-proxy/
+    |-- SKILL.md
+    |-- agents/openai.yaml
+    `-- scripts/setup-vscode-remote-ssh-proxy.ps1
 ```
 
 ## License
