@@ -27,10 +27,7 @@ The bundled skill focuses on three jobs:
      "claudeCode.environmentVariables": [
        { "name": "HTTP_PROXY", "value": "http://127.0.0.1:<ForwardPort>" },
        { "name": "HTTPS_PROXY", "value": "http://127.0.0.1:<ForwardPort>" },
-       { "name": "NODE_TLS_REJECT_UNAUTHORIZED", "value": "0" },
-       { "name": "HTTPPROXY", "value": "http://127.0.0.1:<ForwardPort>" },
-       { "name": "HTTPSPROXY", "value": "http://127.0.0.1:<ForwardPort>" },
-       { "name": "NODETLSREJECTUNAUTHORIZED", "value": "0" }
+       { "name": "NO_PROXY", "value": "localhost,127.0.0.1" }
      ]
    }
    ```

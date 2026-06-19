@@ -206,10 +206,7 @@ data["http.useLocalProxyConfiguration"] = False
 data["claudeCode.environmentVariables"] = [
     {"name": "HTTP_PROXY", "value": proxy_url},
     {"name": "HTTPS_PROXY", "value": proxy_url},
-    {"name": "NODE_TLS_REJECT_UNAUTHORIZED", "value": "0"},
-    {"name": "HTTPPROXY", "value": proxy_url},
-    {"name": "HTTPSPROXY", "value": proxy_url},
-    {"name": "NODETLSREJECTUNAUTHORIZED", "value": "0"},
+    {"name": "NO_PROXY", "value": "localhost,127.0.0.1"},
 ]
 
 with open(path, "w") as handle:
@@ -229,10 +226,7 @@ PY
   "claudeCode.environmentVariables": [
     { "name": "HTTP_PROXY", "value": "$PROXY_URL" },
     { "name": "HTTPS_PROXY", "value": "$PROXY_URL" },
-    { "name": "NODE_TLS_REJECT_UNAUTHORIZED", "value": "0" },
-    { "name": "HTTPPROXY", "value": "$PROXY_URL" },
-    { "name": "HTTPSPROXY", "value": "$PROXY_URL" },
-    { "name": "NODETLSREJECTUNAUTHORIZED", "value": "0" }
+    { "name": "NO_PROXY", "value": "localhost,127.0.0.1" }
   ]
 }
 EOF

@@ -12,7 +12,7 @@ Use this skill to configure Windows VS Code Remote SSH connections for servers t
 - Confirm the Clash/Mihomo local proxy port first. The usual port is `7897`, visible as either `127.0.0.1:7897` in the system proxy address or `7897` in the mixed proxy port.
 - Local SSH config contains `RemoteForward <ForwardPort> 127.0.0.1:<LocalProxyPort>`.
 - The remote VS Code server settings contain `"http.proxy": "http://127.0.0.1:<ForwardPort>"`, `"http.proxySupport": "override"`, `"http.proxyStrictSSL": false`, and `"http.useLocalProxyConfiguration": false`.
-- The remote Claude Code settings contain proxy environment variables for `HTTP_PROXY`, `HTTPS_PROXY`, and `NODE_TLS_REJECT_UNAUTHORIZED`, plus compatibility aliases `HTTPPROXY`, `HTTPSPROXY`, and `NODETLSREJECTUNAUTHORIZED`.
+- The remote Claude Code settings contain proxy environment variables for `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY=localhost,127.0.0.1`.
 - `ForwardPort` and `LocalProxyPort` are different concepts: `ForwardPort` is the port opened on the remote server, and `LocalProxyPort` is the local Clash/Mihomo port on the user's Windows machine. They both default to `7897` for the common case.
 - After key-based login works, the script tries to install remote VS Code extensions: `openai.chatgpt`, `anthropic.claude-code`, and `ms-python.python`.
 - Passwords are only used transiently to install a public key and must never be written into config files, skill files, deliverables, or final responses.
