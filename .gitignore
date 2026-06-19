@@ -1,0 +1,24 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+
+# Local secrets and generated SSH material
+*.pem
+*.key
+id_*
+*.pub
+*.env
+.env*
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.bak.*
+
+# Archives generated for sharing
+*.zip
+*.tar
+*.tar.gz

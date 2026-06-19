@@ -1,0 +1,4 @@
+interface:
+  display_name: "VS Code Remote SSH Proxy"
+  short_description: "Set up VS Code SSH proxy and extensions"
+  default_prompt: "Use $vscode-remote-ssh-proxy to configure a VS Code Remote SSH host with proxy forwarding and default extensions."
