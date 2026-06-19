@@ -1,6 +1,6 @@
 ---
 name: vscode-remote-ssh-proxy
-description: Configure VS Code Remote SSH hosts on Windows that need reverse proxy forwarding through a local Clash/Mihomo proxy. Use when the user provides a remote SSH hostname or IP, username, and password or key, and wants Codex to confirm the local proxy port, set up an SSH Host entry, RemoteForward to 127.0.0.1, key-based login, remote VS Code http.proxy/http.proxyStrictSSL settings, and default remote VS Code extensions for Linux/HPC servers.
+description: Configure VS Code Remote SSH hosts on Windows that need reverse proxy forwarding through a local Clash/Mihomo proxy. Use when the user provides a remote SSH hostname or IP, username, and password or key, and wants Codex to confirm the local proxy port, set up an SSH Host entry, RemoteForward to 127.0.0.1, key-based login, remote VS Code http.proxy/http.proxySupport/http.proxyStrictSSL/http.useLocalProxyConfiguration settings, Claude Code proxy environment variables, and default remote VS Code extensions for Linux/HPC servers.
 ---
 
 # VS Code Remote SSH Proxy
@@ -11,7 +11,8 @@ Use this skill to configure Windows VS Code Remote SSH connections for servers t
 
 - Confirm the Clash/Mihomo local proxy port first. The usual port is `7897`, visible as either `127.0.0.1:7897` in the system proxy address or `7897` in the mixed proxy port.
 - Local SSH config contains `RemoteForward <ForwardPort> 127.0.0.1:<LocalProxyPort>`.
-- The remote VS Code server settings contain `"http.proxy": "http://127.0.0.1:<ForwardPort>"` and `"http.proxyStrictSSL": false`.
+- The remote VS Code server settings contain `"http.proxy": "http://127.0.0.1:<ForwardPort>"`, `"http.proxySupport": "override"`, `"http.proxyStrictSSL": false`, and `"http.useLocalProxyConfiguration": false`.
+- The remote Claude Code settings contain proxy environment variables for `HTTP_PROXY`, `HTTPS_PROXY`, and `NODE_TLS_REJECT_UNAUTHORIZED`, plus compatibility aliases `HTTPPROXY`, `HTTPSPROXY`, and `NODETLSREJECTUNAUTHORIZED`.
 - `ForwardPort` and `LocalProxyPort` are different concepts: `ForwardPort` is the port opened on the remote server, and `LocalProxyPort` is the local Clash/Mihomo port on the user's Windows machine. They both default to `7897` for the common case.
 - After key-based login works, the script tries to install remote VS Code extensions: `openai.chatgpt`, `anthropic.claude-code`, and `ms-python.python`.
 - Passwords are only used transiently to install a public key and must never be written into config files, skill files, deliverables, or final responses.
@@ -35,7 +36,7 @@ Collect or infer:
 2. Use `scripts/setup-vscode-remote-ssh-proxy.ps1` from this skill directory on Windows.
 3. If the user supplied a password, set it only in the current process as `CODEX_REMOTE_SSH_PASSWORD` before running the script, then remove it immediately after the script finishes.
 4. Run the script with the host and user. Pass `-Alias` when the user wants a specific VS Code remote name, and pass `-LocalProxyPort <port>` when the confirmed Clash/Mihomo port is not `7897`. Pass `-ForwardPort <remote-port>` only when the remote listening port should differ from `7897`.
-5. During remote bootstrap, ensure the remote VS Code Machine settings match the UI values: `Http: Proxy` is `http://127.0.0.1:<ForwardPort>` and `Http: Proxy Strict SSL` is unchecked (`false`).
+5. During remote bootstrap, ensure the remote VS Code Machine settings match the UI values: `Http: Proxy` is `http://127.0.0.1:<ForwardPort>`, `Http: Proxy Support` is `override`, `Http: Proxy Strict SSL` is unchecked (`false`), and `Http: Use Local Proxy Configuration` is unchecked (`false`).
 6. Let the script try to install the default remote VS Code extensions after key-based login succeeds. Pass `-SkipExtensionInstall` only when the user does not want extension installation.
 7. Verify the script reports a configured SSH host and successful key-based login.
 8. Tell the user the alias to select in VS Code Remote SSH. Do not repeat their password.
@@ -60,7 +61,7 @@ If passwordless SSH already works, omit the environment variable. If the local C
 - Updates `~/.ssh/config` with a managed block containing `HostName`, `User`, `Port`, `IdentityFile`, `IdentitiesOnly yes`, and `RemoteForward <ForwardPort> 127.0.0.1:<LocalProxyPort>`.
 - Uses a transient askpass helper when `CODEX_REMOTE_SSH_PASSWORD` is set, so OpenSSH can install the public key without storing the password.
 - Appends the public key to remote `~/.ssh/authorized_keys` if missing.
-- Updates both `~/.vscode-server/data/Machine/settings.json` and `~/.vscode-server-insiders/data/Machine/settings.json` on the remote host with `"http.proxy": "http://127.0.0.1:<ForwardPort>"` and `"http.proxyStrictSSL": false`.
+- Updates both `~/.vscode-server/data/Machine/settings.json` and `~/.vscode-server-insiders/data/Machine/settings.json` on the remote host with `"http.proxy": "http://127.0.0.1:<ForwardPort>"`, `"http.proxySupport": "override"`, `"http.proxyStrictSSL": false`, `"http.useLocalProxyConfiguration": false`, and Claude Code proxy environment variables.
 - Uses the local VS Code CLI to try installing `openai.chatgpt`, `anthropic.claude-code`, and `ms-python.python` on the Remote SSH target. If `code` is unavailable or remote extension installation fails, it warns without failing the SSH/proxy setup.
 - Tests that the resulting alias can authenticate with the key.
 

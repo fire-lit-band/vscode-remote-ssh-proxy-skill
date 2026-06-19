@@ -8,7 +8,7 @@ The skill helps Codex configure:
 
 - SSH config with `RemoteForward`
 - Passwordless key-based SSH login
-- Remote VS Code proxy settings
+- Remote VS Code and Claude Code proxy settings
 - Default remote VS Code extensions for Codex, Claude Code, and Python
 
 ## What It Does
@@ -16,12 +16,22 @@ The skill helps Codex configure:
 The bundled skill focuses on three jobs:
 
 1. Helps VS Code remember the SSH login by bootstrapping key-based authentication. It may use the remote password once to install a public key, but it does not store plaintext passwords.
-2. Configures the remote server for Codex by writing the SSH `RemoteForward` rule and remote VS Code proxy settings:
+2. Configures the remote server for Codex by writing the SSH `RemoteForward` rule and remote VS Code/Claude Code proxy settings:
 
    ```json
    {
      "http.proxy": "http://127.0.0.1:<ForwardPort>",
-     "http.proxyStrictSSL": false
+     "http.proxySupport": "override",
+     "http.proxyStrictSSL": false,
+     "http.useLocalProxyConfiguration": false,
+     "claudeCode.environmentVariables": [
+       { "name": "HTTP_PROXY", "value": "http://127.0.0.1:<ForwardPort>" },
+       { "name": "HTTPS_PROXY", "value": "http://127.0.0.1:<ForwardPort>" },
+       { "name": "NODE_TLS_REJECT_UNAUTHORIZED", "value": "0" },
+       { "name": "HTTPPROXY", "value": "http://127.0.0.1:<ForwardPort>" },
+       { "name": "HTTPSPROXY", "value": "http://127.0.0.1:<ForwardPort>" },
+       { "name": "NODETLSREJECTUNAUTHORIZED", "value": "0" }
+     ]
    }
    ```
 

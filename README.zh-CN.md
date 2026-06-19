@@ -8,7 +8,7 @@
 
 - 带 `RemoteForward` 的 SSH 配置
 - 基于 SSH key 的免密登录
-- 远端 VS Code 代理设置
+- 远端 VS Code 和 Claude Code 代理设置
 - Codex、Claude Code、Python 这些默认远端 VS Code 扩展
 
 ## 功能
@@ -16,12 +16,22 @@
 这个 skill 主要做三件事：
 
 1. 帮助 VS Code “保存”登录状态：脚本会使用一次性密码安装 SSH 公钥，之后 VS Code Remote SSH 通过 SSH key 登录，不会保存明文密码。
-2. 在远程服务器上配置 Codex 使用的代理环境：写入 SSH `RemoteForward` 规则，并设置远端 VS Code 代理：
+2. 在远程服务器上配置 Codex 使用的代理环境：写入 SSH `RemoteForward` 规则，并设置远端 VS Code / Claude Code 代理：
 
    ```json
    {
      "http.proxy": "http://127.0.0.1:<ForwardPort>",
-     "http.proxyStrictSSL": false
+     "http.proxySupport": "override",
+     "http.proxyStrictSSL": false,
+     "http.useLocalProxyConfiguration": false,
+     "claudeCode.environmentVariables": [
+       { "name": "HTTP_PROXY", "value": "http://127.0.0.1:<ForwardPort>" },
+       { "name": "HTTPS_PROXY", "value": "http://127.0.0.1:<ForwardPort>" },
+       { "name": "NODE_TLS_REJECT_UNAUTHORIZED", "value": "0" },
+       { "name": "HTTPPROXY", "value": "http://127.0.0.1:<ForwardPort>" },
+       { "name": "HTTPSPROXY", "value": "http://127.0.0.1:<ForwardPort>" },
+       { "name": "NODETLSREJECTUNAUTHORIZED", "value": "0" }
+     ]
    }
    ```
 

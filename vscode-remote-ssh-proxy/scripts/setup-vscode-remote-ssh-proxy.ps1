@@ -200,7 +200,17 @@ if os.path.exists(path):
         data = {}
 
 data["http.proxy"] = proxy_url
+data["http.proxySupport"] = "override"
 data["http.proxyStrictSSL"] = False
+data["http.useLocalProxyConfiguration"] = False
+data["claudeCode.environmentVariables"] = [
+    {"name": "HTTP_PROXY", "value": proxy_url},
+    {"name": "HTTPS_PROXY", "value": proxy_url},
+    {"name": "NODE_TLS_REJECT_UNAUTHORIZED", "value": "0"},
+    {"name": "HTTPPROXY", "value": proxy_url},
+    {"name": "HTTPSPROXY", "value": proxy_url},
+    {"name": "NODETLSREJECTUNAUTHORIZED", "value": "0"},
+]
 
 with open(path, "w") as handle:
     json.dump(data, handle, indent=2, sort_keys=True)
@@ -210,7 +220,22 @@ PY
     if [ -f "$file" ]; then
       cp "$file" "$file.bak.codex-$(date +%Y%m%d%H%M%S)"
     fi
-    printf '{\n  "http.proxy": "%s",\n  "http.proxyStrictSSL": false\n}\n' "$PROXY_URL" > "$file"
+    cat > "$file" <<EOF
+{
+  "http.proxy": "$PROXY_URL",
+  "http.proxySupport": "override",
+  "http.proxyStrictSSL": false,
+  "http.useLocalProxyConfiguration": false,
+  "claudeCode.environmentVariables": [
+    { "name": "HTTP_PROXY", "value": "$PROXY_URL" },
+    { "name": "HTTPS_PROXY", "value": "$PROXY_URL" },
+    { "name": "NODE_TLS_REJECT_UNAUTHORIZED", "value": "0" },
+    { "name": "HTTPPROXY", "value": "$PROXY_URL" },
+    { "name": "HTTPSPROXY", "value": "$PROXY_URL" },
+    { "name": "NODETLSREJECTUNAUTHORIZED", "value": "0" }
+  ]
+}
+EOF
   fi
 }
 
