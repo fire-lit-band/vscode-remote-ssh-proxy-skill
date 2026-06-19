@@ -13,12 +13,10 @@
 
 ## 功能
 
-内置 PowerShell 脚本会做这些事：
+这个 skill 主要做三件事：
 
-1. 在需要时为每个远端主机创建独立的 Ed25519 SSH key。
-2. 向 `~/.ssh/config` 写入一个由脚本管理的 SSH Host 配置块。
-3. 将公钥安装到远端的 `~/.ssh/authorized_keys`。
-4. 写入远端 VS Code Machine 设置：
+1. 帮助 VS Code “保存”登录状态：脚本会使用一次性密码安装 SSH 公钥，之后 VS Code Remote SSH 通过 SSH key 登录，不会保存明文密码。
+2. 在远程服务器上配置 Codex 使用的代理环境：写入 SSH `RemoteForward` 规则，并设置远端 VS Code 代理：
 
    ```json
    {
@@ -27,7 +25,7 @@
    }
    ```
 
-5. 尝试在 Remote SSH 目标上安装这些 VS Code 扩展：
+3. 安装 Codex、Claude Code、Python 等默认 Remote SSH 扩展：
 
    ```text
    openai.chatgpt

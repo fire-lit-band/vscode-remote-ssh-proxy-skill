@@ -13,12 +13,10 @@ The skill helps Codex configure:
 
 ## What It Does
 
-The bundled PowerShell script:
+The bundled skill focuses on three jobs:
 
-1. Creates a per-host Ed25519 SSH key when needed.
-2. Writes a managed SSH config block for the remote host.
-3. Installs the public key into remote `~/.ssh/authorized_keys`.
-4. Writes remote VS Code Machine settings:
+1. Helps VS Code remember the SSH login by bootstrapping key-based authentication. It may use the remote password once to install a public key, but it does not store plaintext passwords.
+2. Configures the remote server for Codex by writing the SSH `RemoteForward` rule and remote VS Code proxy settings:
 
    ```json
    {
@@ -27,7 +25,7 @@ The bundled PowerShell script:
    }
    ```
 
-5. Tries to install these VS Code extensions on the Remote SSH target:
+3. Installs the default Remote SSH extensions for Codex, Claude Code, and Python:
 
    ```text
    openai.chatgpt
