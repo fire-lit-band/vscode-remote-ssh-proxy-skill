@@ -6,7 +6,7 @@
 
 这个 skill 会帮助 Codex 配置：
 
-- 带 `RemoteForward` 的 SSH 配置
+- 带 `RemoteForward` 的 SSH 配置，且默认不显式写入 `Port 22`
 - 基于 SSH key 的免密登录
 - 远端 VS Code 和 Claude Code 代理设置
 - Codex、Claude Code、Python 这些默认远端 VS Code 扩展

@@ -58,7 +58,7 @@ If passwordless SSH already works, omit the environment variable. If the local C
 
 - Creates `~/.ssh` if needed.
 - Generates a per-host Ed25519 key if one does not already exist.
-- Updates `~/.ssh/config` with a managed block containing `HostName`, `User`, `Port`, `IdentityFile`, `IdentitiesOnly yes`, and `RemoteForward <ForwardPort> 127.0.0.1:<LocalProxyPort>`.
+- Updates `~/.ssh/config` with a managed block containing `HostName`, `User`, `IdentityFile`, `IdentitiesOnly yes`, and `RemoteForward <ForwardPort> 127.0.0.1:<LocalProxyPort>`. It writes `Port` only when the SSH port is not the default `22`.
 - Uses a transient askpass helper when `CODEX_REMOTE_SSH_PASSWORD` is set, so OpenSSH can install the public key without storing the password.
 - Appends the public key to remote `~/.ssh/authorized_keys` if missing.
 - Updates both `~/.vscode-server/data/Machine/settings.json` and `~/.vscode-server-insiders/data/Machine/settings.json` on the remote host with `"http.proxy": "http://127.0.0.1:<ForwardPort>"`, `"http.proxySupport": "override"`, `"http.proxyStrictSSL": false`, `"http.useLocalProxyConfiguration": false`, and Claude Code proxy environment variables.

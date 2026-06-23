@@ -121,13 +121,17 @@ function Update-SshConfig {
         Write-Warning "An unmanaged Host '$AliasValue' already exists in $ConfigPath. Prefer a different alias unless the user asked to keep this name."
     }
 
+    $portLine = ""
+    if ($Port -ne 22) {
+        $portLine = "    Port $Port`n"
+    }
+
     $block = @"
 $start
 Host $AliasValue
     HostName $HostName
     User $User
-    Port $Port
-    IdentityFile $IdentityFile
+$portLine    IdentityFile $IdentityFile
     IdentitiesOnly yes
     RemoteForward $ForwardPort ${LocalProxyHost}:$LocalProxyPort
     ServerAliveInterval 60

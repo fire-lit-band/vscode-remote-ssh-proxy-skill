@@ -6,7 +6,7 @@ A Codex skill for setting up VS Code Remote SSH on Windows when a remote Linux/H
 
 The skill helps Codex configure:
 
-- SSH config with `RemoteForward`
+- SSH config with `RemoteForward` and no explicit `Port 22` line
 - Passwordless key-based SSH login
 - Remote VS Code and Claude Code proxy settings
 - Default remote VS Code extensions for Codex, Claude Code, and Python
